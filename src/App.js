@@ -17,10 +17,16 @@ class App extends Component {
           <div>
             <Link to="/astronomy">Astronomy</Link>
           </div>
+          <div>
+            <Link to="/lastSpace">Last Space</Link>
+          </div>
         </nav>
 
         <Switch>
           <Route path="/space">
+            <Space />
+          </Route>
+          <Route path="/lastSpace">
             <Space />
           </Route>
           <Route path="/astronomy">

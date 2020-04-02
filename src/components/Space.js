@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as types from "../actions";
 import { connect } from "react-redux";
 import space from "../reducers/space";
+import LastSpace from "./LastSpace";
 
 // 1. API data -> fetch 로 연결해주고, 이건 함수로 만들어줄게요
 // 2. action type 을 설정해줍니다
@@ -9,8 +10,10 @@ import space from "../reducers/space";
 // 함수를 설정해줍니다.
 // 4. 설정된 함수는 state 값에 따라 업데이트 됩니다
 // 5. Space.js 에서 액션을 날려주는것을 설정합니다
-// 6. mapStateToProps, mapDispatchToProps를 설정해줍니다
-// 7. 데이터가 잘 오는지 확인한후 render 데이타가 나오게 해줍니다.
+// 6. reducers - index.js 에서 reducers 에 따로 설정해준
+//    space combineReducers, import 해줍니다.
+// 7. mapStateToProps, mapDispatchToProps를 설정해줍니다
+// 8. 데이터가 잘 오는지 확인한후 render 데이타가 나오게 해줍니다.
 
 class Space extends Component {
   constructor(props) {
@@ -49,13 +52,13 @@ class Space extends Component {
   }
 
   render() {
-    const { astronomy } = this.props;
+    const { astronomy, current } = this.props;
     const { title, img, date } = astronomy;
     console.log("props", this.props);
     return (
       <div>
         <h1>Space 페이지 입니다.</h1>
-
+        <LastSpace />
         <h1>{title}</h1>
         <img src={img} alt={title}></img>
         <h3>{date}</h3>

@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import app from "./app";
 import space from "./space";
+import lastSpace from "./lastSpace";
 
 const reducers = combineReducers({
   app,
-  space
+  space,
+  lastSpace
 });
 
 export default reducers;
