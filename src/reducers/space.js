@@ -6,7 +6,8 @@ const initialState = {
     img: "",
     date: ""
   },
-  currentDate: ""
+  currentDate: "",
+  prevDate: ""
 };
 
 const space = (state = initialState, action) => {
