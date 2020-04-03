@@ -6,7 +6,7 @@
 // 6. 현재 설정된 날짜는 변수로 받아옵니다. +
 // 7. 현재 날짜를  저장하도록 componentDidMount에서 initialize 해줍니다(action을 날려서) +
 // 8. 이전우주보기를 클릭하면 전날짜로 계속 옮겨집니다. ( onClick으로 연결 ) !!중요!!
-// 9. LastSpace.js 에 router 로 붙여줍니다.
+// 9. LastSpace.js 에 router 로 붙여줍니다. +
 
 import React, { Component } from "react";
 import * as types from "../actions";
@@ -21,66 +21,63 @@ class LastSpace extends Component {
   componentDidMount() {
     console.log("LastSpace componentDidMount!!");
     const { action } = this.props;
-    this.getAstronomyData();
-    this.currentDates();
-    // this.getPrev();
+
+    this.initCurrentDate();
   }
 
-  currentDates() {
+  initCurrentDate() {
     const { action } = this.props;
-    action(
-      types.LAST_ASTRONOMY_DATA_REQUEST,
-      new Date().toISOString().slice(0, 10)
-    );
+    const now = new Date().toISOString().slice(0, 10);
+    action(types.LAST_ASTRONOMY_DATA_REQUEST, now);
   }
 
   getPrev() {
-    const { action } = this.props;
-    const current = new Date().toISOString().slice(0, 10);
-    const prevDate = current.setDate(getDate() - 1);
-    console.log("어제 날짜 계산하기 ", prevDate);
+    const { action, currentDate } = this.props;
+    console.log("!!!!!!", this.props);
+    const prevDate = new Date(currentDate);
+    prevDate.setDate(prevDate.getDate() - 1);
+    const strPrevDate = prevDate.toISOString().slice(0, 10);
+    console.log("어제 날짜 계산하기!!!!", strPrevDate);
 
-    action(types.SPACE_ASTRONOMY_DATA_REQUEST, {
-      prevDate: data.date
-    });
+    action(types.LAST_ASTRONOMY_DATA_REQUEST, strPrevDate);
+    // action(
+    //   types.PREV_ASTRONOMY_DATA_REQUEST,
+    //   prevDate.toISOString().slice(0, 10)
+    // );
   }
 
-  getAstronomyData() {
-    const { action } = this.props;
-    fetch(
-      "https://api.nasa.gov/planetary/apod?api_key=bHXdeJkOdPSycslSNZRPptAtkbV9ZJTwxA40m1x2"
-    )
-      .then(response => {
-        console.log("첫번째 then", response);
-        return response.json();
-      })
-      .then(data => {
-        console.log("두번쨰 then", data);
-        console.log("제목", data.title);
+  // getAstronomyData() {
+  //   const { action } = this.props;
+  //   fetch(
+  //     "https://api.nasa.gov/planetary/apod?api_key=bHXdeJkOdPSycslSNZRPptAtkbV9ZJTwxA40m1x2"
+  //   )
+  //     .then(response => {
+  //       console.log("첫번째 then", response);
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       console.log("두번쨰 then", data);
+  //       console.log("제목", data.title);
 
-        // action
-        action(types.SPACE_ASTRONOMY_DATA_REQUEST, {
-          title: data.title,
-          img: data.hdurl,
-          date: data.date
-        });
-      });
-  }
+  //       // action
+  //       action(types.SPACE_ASTRONOMY_DATA_REQUEST, {
+  //         title: data.title,
+  //         img: data.hdurl,
+  //         date: data.date
+  //       });
+  //     });
+  // }
 
   render() {
-    // const { currentDates } = this;
-    // console.log("렌더에서 현재날짜", currentDates);
-
     const { astronomy, currentDate, prevDate } = this.props;
-    const { title, img, date } = astronomy;
     const { getPrev, currentDates } = this;
+    console.log("last Space props", this.props);
     console.log("프롭스 현재 날짜", currentDate);
     console.log("프롭스 이전 날짜", prevDate);
     return (
       <div>
-        <button onClick={() => getPrev()}> 이전 우주 보기 </button>
+        <button onClick={() => this.getPrev()}> 이전 우주 보기 </button>
         <p>현재 날짜 : {currentDate} </p>
-        <p>이전 날짜 : {prevDate} </p>
       </div>
     );
   }
@@ -91,7 +88,8 @@ class LastSpace extends Component {
 function mapStateToProps(state) {
   return {
     astronomy: state.lastSpace.astronomy,
-    currentDate: state.lastSpace.currentDate
+    currentDate: state.lastSpace.currentDate,
+    prevDate: state.lastSpace.prevDate
   };
 }
 
