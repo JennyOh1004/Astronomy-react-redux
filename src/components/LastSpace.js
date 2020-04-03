@@ -23,6 +23,7 @@ class LastSpace extends Component {
     const { action } = this.props;
 
     this.initCurrentDate();
+    this.getAstronomyData();
   }
 
   initCurrentDate() {
@@ -46,30 +47,31 @@ class LastSpace extends Component {
     // );
   }
 
-  // getAstronomyData() {
-  //   const { action } = this.props;
-  //   fetch(
-  //     "https://api.nasa.gov/planetary/apod?api_key=bHXdeJkOdPSycslSNZRPptAtkbV9ZJTwxA40m1x2"
-  //   )
-  //     .then(response => {
-  //       console.log("첫번째 then", response);
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       console.log("두번쨰 then", data);
-  //       console.log("제목", data.title);
+  getAstronomyData() {
+    const { action } = this.props;
+    fetch(
+      "https://api.nasa.gov/planetary/apod?api_key=bHXdeJkOdPSycslSNZRPptAtkbV9ZJTwxA40m1x2"
+    )
+      .then(response => {
+        console.log("첫번째 then", response);
+        return response.json();
+      })
+      .then(data => {
+        console.log("두번쨰 then", data);
+        console.log("제목", data.title);
 
-  //       // action
-  //       action(types.SPACE_ASTRONOMY_DATA_REQUEST, {
-  //         title: data.title,
-  //         img: data.hdurl,
-  //         date: data.date
-  //       });
-  //     });
-  // }
+        // action
+        action(types.LASTSPACE_ASTRONOMY_DATA, {
+          title: data.title,
+          img: data.hdurl,
+          date: data.date
+        });
+      });
+  }
 
   render() {
     const { astronomy, currentDate, prevDate } = this.props;
+    const { title, img, date } = astronomy;
     const { getPrev, currentDates } = this;
     console.log("last Space props", this.props);
     console.log("프롭스 현재 날짜", currentDate);
@@ -78,6 +80,11 @@ class LastSpace extends Component {
       <div>
         <button onClick={() => this.getPrev()}> 이전 우주 보기 </button>
         <p>현재 날짜 : {currentDate} </p>
+        <h1>Last Space 페이지 입니다.</h1>
+
+        <h1>{title}</h1>
+        <img src={img} alt={title}></img>
+        <h3>{date}</h3>
       </div>
     );
   }

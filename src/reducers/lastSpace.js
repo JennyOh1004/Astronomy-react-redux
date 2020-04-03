@@ -22,6 +22,11 @@ const lastSpace = (state = initialState, action) => {
         ...state,
         prevDate: action.data
       };
+    case types.LASTSPACE_ASTRONOMY_DATA:
+      return {
+        ...state,
+        astronomy: action.data
+      };
     default:
       return state;
   }
