@@ -23,13 +23,13 @@ class LastSpace extends Component {
     const { action } = this.props;
 
     this.initCurrentDate();
-    this.getAstronomyData();
   }
 
   initCurrentDate() {
     const { action } = this.props;
     const now = new Date().toISOString().slice(0, 10);
     action(types.LAST_ASTRONOMY_DATA_REQUEST, now);
+    this.getAstronomyData();
   }
 
   getPrev() {
