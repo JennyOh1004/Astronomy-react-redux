@@ -45,13 +45,15 @@ class LastSpace extends Component {
     //   types.PREV_ASTRONOMY_DATA_REQUEST,
     //   prevDate.toISOString().slice(0, 10)
     // );
+    this.getAstronomyData(strPrevDate);
   }
 
-  getAstronomyData() {
+  getAstronomyData(date) {
     const { action } = this.props;
-    fetch(
-      "https://api.nasa.gov/planetary/apod?api_key=bHXdeJkOdPSycslSNZRPptAtkbV9ZJTwxA40m1x2"
-    )
+    const BASE_API =
+      "https://api.nasa.gov/planetary/apod?api_key=bHXdeJkOdPSycslSNZRPptAtkbV9ZJTwxA40m1x2";
+    const api = date ? BASE_API + "&date=" + date : BASE_API;
+    fetch(api)
       .then(response => {
         console.log("첫번째 then", response);
         return response.json();
