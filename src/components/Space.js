@@ -58,7 +58,7 @@ class Space extends Component {
     return (
       <div>
         <h1>Space 페이지 입니다.</h1>
-        <LastSpace />
+
         <h1>{title}</h1>
         <img src={img} alt={title}></img>
         <h3>{date}</h3>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Astronomy from "./components/Astronomy";
 import Space from "./components/Space";
 import AstronomyCard from "./components/AstronomyCard";
+import LastSpace from "./components/LastSpace";
 import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 class App extends Component {
   render() {
@@ -27,7 +28,7 @@ class App extends Component {
             <Space />
           </Route>
           <Route path="/lastSpace">
-            <Space />
+            <LastSpace />
           </Route>
           <Route path="/astronomy">
             <Astronomy />
